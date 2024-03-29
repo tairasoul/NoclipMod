@@ -7,7 +7,7 @@ using BepInEx.Configuration;
 
 namespace NoclipMod;
 
-[BepInPlugin("tairasoul.vaproxy.noclip", "NoclipMod", "1.0.0")]
+[BepInPlugin("tairasoul.vaproxy.noclip", "NoclipMod", "1.0.1")]
 public class Plugin: BaseUnityPlugin
 {
 
@@ -42,7 +42,7 @@ public class Plugin: BaseUnityPlugin
                 });
                 GameObject button = ComponentUtils.CreateButton("Refresh Config", "tairasoul.noclipmod.refresh");
                 button.SetParent(Page, false);
-                button.GetComponent<RectTransform>().anchoredPosition = new Vector2(-371.5162f, 75.7367f);
+                button.GetComponent<RectTransform>().anchoredPosition = new Vector2(-393.3322f, 75.7367f);
                 GameObject blabel = button.Find("ItemName");
                 blabel.GetComponent<RectTransform>().anchoredPosition = new Vector2(12.8028f, 0);
                 Button b = button.GetComponent<Button>();
@@ -53,7 +53,38 @@ public class Plugin: BaseUnityPlugin
                 });
             }
         };
-        SettingsAPI.Plugin.API.RegisterMod("tairasoul.noclipmod", "NoclipMod", [NoclipOption], (GameObject obj) => { obj.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f); });
+        Option HideSen = new() {
+            Create = (GameObject Page) =>
+            {
+                GameObject button = ComponentUtils.CreateButton("Hide Sen & V-06", "tairasoul.noclipmod.hidesen");
+                button.SetParent(Page, false);
+                button.GetComponent<RectTransform>().anchoredPosition = new Vector2(-249.5085f, 74.6256f);
+                GameObject label = button.Find("ItemName");
+                label.GetComponent<RectTransform>().anchoredPosition = new Vector2(3.45f, -1);
+                Button toggleComp = button.GetComponent<Button>();
+                toggleComp.onClick.AddListener(() =>
+                {
+                    GameObject Sen = GameObject.Find("S-105");
+                    GameObject V06 = GameObject.Find("V-06");
+                    if (Sen) {
+                        foreach (MeshRenderer renderer in Sen.GetComponentsInChildren<MeshRenderer>())
+                        {
+                            renderer.enabled = false;
+                        }
+                        GameObject Geom = Sen.Find("Humanbot_A_Geom");
+                        Geom.SetActive(false);
+                    }
+                    if (V06)
+                    {
+                        foreach (MeshRenderer renderer in V06.GetComponentsInChildren<MeshRenderer>())
+                        {
+                            renderer.enabled = false;
+                        }
+                    }
+                });
+            }
+        };
+        SettingsAPI.Plugin.API.RegisterMod("tairasoul.noclipmod", "NoclipMod", [NoclipOption, HideSen], (GameObject obj) => { obj.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f); });
         init = true;
     }
 
