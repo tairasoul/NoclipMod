@@ -8,7 +8,7 @@ using ProBuilder2.Common;
 
 namespace NoclipMod 
 {
-    [BepInPlugin("tairasoul.vaproxy.noclip", "NoclipMod", "1.0.2")]
+    [BepInPlugin("tairasoul.vaproxy.noclip", "NoclipMod", "1.0.3")]
     public class Plugin: BaseUnityPlugin
     {
 
@@ -102,6 +102,8 @@ namespace NoclipMod
                             foreach (MeshRenderer renderer in V06Renderers) {
                                 renderer.enabled = !toggled;
                             }
+                            SpriteRenderer Eyeball = V06.Find("Drone").Find("Bod").Find("Cylinder").Find("Eye0").GetComponent<SpriteRenderer>();
+                            Eyeball.enabled = !toggled;
                         }
                     });
                     GameObject button = ComponentUtils.CreateButton("Force Hide Sen", "tairasoul.noclipmod.hidesen");
