@@ -31,9 +31,11 @@ namespace NoclipMod
         bool SenPopulated = false;
         bool V06Populated = false;
 
+        bool ShiftHeld = false;
+
         private void Init() {
             if (init) return;
-            Logger.LogInfo("\n-- NOCLIP INSTRUCTIONS --\nTo enable, go to Mod Settings -> NoclipMod and enable Noclip.\n-- NOCLIP CONTROLS --\nW - Forward\nA - Left\nS - Backward\nD - Right\nC - Down\nV - Up\n-- ADDITIONAL INFO --\nCode partially taken from https://github.com/KaylinOwO/Project-Apparatus/blob/main/src/Features.cs#L278");
+            Logger.LogInfo("\n-- NOCLIP INSTRUCTIONS --\nTo enable, go to Mod Settings -> NoclipMod and enable Noclip.\n-- NOCLIP CONTROLS --\nW - Forward\nA - Left\nS - Backward\nD - Right\nLeft Control - Down\nSpace - Up\nShift - Double speed while held\n-- ADDITIONAL INFO --\nCode partially taken from https://github.com/KaylinOwO/Project-Apparatus/blob/main/src/Features.cs#L278");
             Option NoclipOption = new() {
                 Create = (GameObject Page) => 
                 {
@@ -132,41 +134,6 @@ namespace NoclipMod
                             }
                         }
                     });
-                    /*toggleComp.onValueChanged.AddListener((bool toggled) =>
-                    {
-                        GameObject Sen = GameObject.Find("S-105");
-                        GameObject V06 = GameObject.Find("V-06");
-                        if (Sen) {
-                            if (!SenPopulated) {
-                                Logger.LogInfo("Populating Sen's renderer list.");
-                                foreach (MeshRenderer renderer in Sen.GetComponentsInChildren<MeshRenderer>()) {
-                                    if (renderer.enabled) {
-                                        SenRenderers = SenRenderers.Add(renderer);
-                                    }
-                                }
-                                SenPopulated = true;
-                            }
-                            foreach (MeshRenderer renderer in SenRenderers) {
-                                renderer.enabled = !toggled;
-                            }
-                            GameObject Geom = Sen.Find("Humanbot_A_Geom");
-                            Geom.SetActive(!toggled);
-                        }
-                        if (V06) {
-                            if (!V06Populated) {
-                                Logger.LogInfo("Populating V-06's renderer list.");
-                                foreach (MeshRenderer renderer in V06.GetComponentsInChildren<MeshRenderer>()) {
-                                    if (renderer.enabled) {
-                                        V06Renderers = V06Renderers.Add(renderer);
-                                    }
-                                }
-                                V06Populated = true;
-                            }
-                            foreach (MeshRenderer renderer in V06Renderers) {
-                                renderer.enabled = !toggled;
-                            }
-                        }
-                    });*/
                 }
             };
             SettingsAPI.Plugin.API.RegisterMod("tairasoul.noclipmod", "NoclipMod", new Option[] {NoclipOption, HideSen}, (GameObject obj) => { obj.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f); });
@@ -197,8 +164,9 @@ namespace NoclipMod
                         AKey = IsKeyDown(KeyCode.A),
                         SKey = IsKeyDown(KeyCode.S),
                         DKey = IsKeyDown(KeyCode.D),
-                        Space = IsKeyDown(KeyCode.V),
-                        Ctrl = IsKeyDown(KeyCode.C);
+                        Space = IsKeyDown(KeyCode.Space),
+                        Ctrl = IsKeyDown(KeyCode.LeftControl),
+                        Shift = IsKeyDown(KeyCode.LeftShift);
 
                     Vector3 Movement = new(0, 0, 0);
 
@@ -214,7 +182,8 @@ namespace NoclipMod
                         Movement.y += TPCTransform.up.y;
                     if (Ctrl)
                         Movement.y -= TPCTransform.up.y;
-                    
+                    if (Shift)
+                        Movement *= 2.25f;
                     SenTransform.position += Movement * SpeedMult.Value;
                 }
                 else {
