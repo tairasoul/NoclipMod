@@ -8,7 +8,7 @@ using ProBuilder2.Common;
 
 namespace NoclipMod 
 {
-    [BepInPlugin("tairasoul.vaproxy.noclip", "NoclipMod", "1.0.3")]
+    [BepInPlugin("tairasoul.vaproxy.noclip", "NoclipMod", "1.0.4")]
     public class Plugin: BaseUnityPlugin
     {
 
