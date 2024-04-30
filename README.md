@@ -9,5 +9,6 @@ Decent bit of the noclip code was taken from [Project Apparatus](https://github.
 # Controls
 
 WASD - movement (probably obvious)
-C - down
-V - up
+Ctrl - down
+Space - up
+Shift - doubles speed
