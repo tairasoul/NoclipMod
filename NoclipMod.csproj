@@ -7,7 +7,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup>
-    <LangVersion>9.0</LangVersion>
+    <LangVersion>12</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BepInEx">
@@ -413,7 +413,7 @@
       <HintPath>../../../.local/share/Steam/steamapps/common/VA Proxy Demo/VA-Proxy_Data/Managed/System.Xml.Linq.dll</HintPath>
     </Reference>
     <Reference Include="SettingsAPI">
-      <HintPath>../../../Downloads/SettingsAPI/SettingsAPI.dll</HintPath>
+      <HintPath>../Dlls/SettingsAPI.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>
